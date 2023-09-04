@@ -4,8 +4,9 @@ const Hd=document.querySelector('header'),Hb=document.querySelector('h1+button')
 
 function Ui(o){let i=0,I=``; while(i<21){i++; if(o['strIngredient'+i])
   I+=`<li>${o['strMeasure'+i]} ${o['strIngredient'+i]}</li>`; else return I;}}
-function Ps(p,c=178){return p.slice(0,p.slice(0,c).lastIndexOf('.')+1||c);}//,
-function Dt(e='search.php?s=',n){fetch(`https://themealdb.com/api/json/v1/1/${e}`)
+function Ps(p,c=178){return p.slice(0,p.slice(0,c).lastIndexOf('.')+1||c);} //,
+function Dt(e='search.php?s=',n){document.body.classList.add('b');
+  fetch(`https://themealdb.com/api/json/v1/1/${e}`)
   .then(r=>r.json()).then(j=>{let i=0,m=``;
   if(n==0){j=j.meals[0]; m=`
     <div><img src='${j.strMealThumb}'alt='${j.strMeal}'><h3>${j.strMeal}</h3></div>
@@ -26,7 +27,7 @@ function Dt(e='search.php?s=',n){fetch(`https://themealdb.com/api/json/v1/1/${e}
   else {j=j.meals; while(i<(n<=j.length?n:j.length)) m+=`<article
     data-i='${j[i].idMeal}'><img src='${j[i].strMealThumb}' alt='${j[i].strMeal}'>
     <div><h3>${j[i++].strMeal}</h3></div></article>`;}
-  Mn.innerHTML=m;
+  Mn.innerHTML=m; document.body.classList.remove('b');
   if(n==1) for(let i=0;i<Mn.childElementCount;i++)
     Mn.children[i].addEventListener('click',()=>
       Dt(`filter.php?c=${Mn.children[i].firstElementChild.alt}`,20));
@@ -38,8 +39,8 @@ function Dt(e='search.php?s=',n){fetch(`https://themealdb.com/api/json/v1/1/${e}
       Dt(`filter.php?i=${Mn.children[i].firstElementChild.textContent}`));
   else if(n!=0) for(let i=0;i<Mn.childElementCount;i++)
     Mn.children[i].addEventListener('click',()=>
-      {Dt(`lookup.php?i=${Mn.children[i].dataset.i}`,0);
-      Sr.style.display='';});}).catch(e=>console.log(e));}
+      {Dt(`lookup.php?i=${Mn.children[i].dataset.i}`,0); Sr.style.display='';});})
+  .catch(e=>{console.log(e); document.body.classList.remove('b');});}
 Dt();
 
 Hb.addEventListener('click',()=>{Hd.classList.toggle('hd');
@@ -52,7 +53,7 @@ Ho.children[0].addEventListener('click',()=>
 Ho.children[4].addEventListener('click',()=>
   {Ct.style.display='flex'; Mn.innerHTML=''; Sr.style.display='';});
 
-// function
+//
 Ho.children[1].addEventListener('click',()=>
   {Dt('categories.php',1); Sr.style.display=''; Ct.style.display='';});
 Ho.children[2].addEventListener('click',()=>

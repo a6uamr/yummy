@@ -2,7 +2,7 @@
 @font-face {font-family: fb; src: url(fb.woff2);}
 body {background: #0d0d0d; font-family: system-ui, sans-serif;
   box-sizing: border-box; min-height: 100vh; padding: 2em 1em; margin: 0 0 0 66px;
-  display: flex; flex-flow: column; justify-content: center;}
+  display: flex; flex-flow: column; justify-content: center; transition: .4s;}
 h1, header>ol, header h2, main>article>div>h3 {margin: 0;}
 form {display: none; flex-flow: wrap; gap: 1em;}
 form>:is(input,button) {background: 0; font-family: inherit; font-size: 1em;}
@@ -15,7 +15,7 @@ main>div>a, form>button {line-height: 1.5; padding: .375em .75em;
 header {background: #0d0d0d; color: #f9f6f6;
   width: min(209px,calc(100vw - 2*24px - 66px)); padding: 24px;
   position: fixed; inset: 0 auto 0 0; z-index: 1; display: flex; flex-flow: column;
-  justify-content: space-between; transition: .4s ease-in-out;}
+  justify-content: space-between; transition: translate .4s ease-in-out;}
 .hd {translate: -100%;}
 header>div {background: #fff; color: #000; padding: 24px 8px;
   position: absolute; inset: 0 auto 0 100%; display: flex;
@@ -93,7 +93,8 @@ main+form>button:enabled:hover {background: #dc3545; color: #fff; cursor: pointe
   main>div:has(h4) {margin-left: 1.5em; grid-column: 2/-1;}}
 @media (width>1126px) {main {grid: auto/repeat(4,1fr);}}
 
-/* .is {background: #fff; font-family: fs; position: fixed; inset: 0; z-index: 3; display: flex;}
+.b {overflow: hidden;}
 @keyframes r {100% {rotate: 360deg;}}
-.is::before {content: '\f110'; font-size: 5em; margin: auto; animation: r 1.3s linear infinite;}
-body {overflow: hidden;} */
+.b::after {content: '\f110'; color: #fff; font-family: fs; font-size: 5em;
+  position: fixed; inset: -100vmax; z-index: 1; display: flex;
+  justify-content: center; align-items: center; animation: r 1.3s linear infinite;}
