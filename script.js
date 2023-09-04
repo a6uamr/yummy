@@ -1,9 +1,8 @@
 const Hd=document.querySelector('header'),Hb=document.querySelector('h1+button'),
   Ho=document.querySelector('header>ol'),Sr=document.querySelector('form[role]'),
-  Mn=document.querySelector('main'),Cn=document.querySelector('main+form');
+  Mn=document.querySelector('main'),Ct=document.querySelector('main+form');
 
-function Ui(o){let i=0,I=``;
-  while(i<21){i++; if(o['strIngredient'+i])
+function Ui(o){let i=0,I=``; while(i<21){i++; if(o['strIngredient'+i])
   I+=`<li>${o['strMeasure'+i]} ${o['strIngredient'+i]}</li>`; else return I;}}
 function Ps(p,c=178){return p.slice(0,p.slice(0,c).lastIndexOf('.')+1||c);}//,
 function Dt(e='search.php?s=',n){fetch(`https://themealdb.com/api/json/v1/1/${e}`)
@@ -16,7 +15,7 @@ function Dt(e='search.php?s=',n){fetch(`https://themealdb.com/api/json/v1/1/${e}
     ${j.strTags?`<h4>Tags:</h4>
       <ul><li>${j.strTags.split(',').join('</li><li>')}</li></ul>`:''}
     ${j.strSource?`<a href='${j.strSource}' target='_blank'>Source</a>`:''}
-    <a href='${j.strYoutube}' target='_blank'>Youtube</a></div>`}
+    ${j.strYoutube?`<a href='${j.strYoutube}' target='_blank'>Youtube</a>`:''}</div>`}
   else if(n==1){j=j.categories; while(i<j.length) m+=`<article>
     <img src='${j[i].strCategoryThumb}' alt='${j[i].strCategory}'>
     <div><h3>${j[i].strCategory}</h3><p>${Ps(j[i++].strCategoryDescription)}</p>
@@ -46,37 +45,30 @@ Dt();
 Hb.addEventListener('click',()=>{Hd.classList.toggle('hd');
   Hb.classList.toggle('hb'); Ho.classList.toggle('ho');});
 Ho.addEventListener('click',()=>{Hd.classList.add('hd');
-  Hb.classList.remove('hb'); Ho.classList.add('ho');}); //main role?
+  Hb.classList.remove('hb'); Ho.classList.add('ho');}); //main form
 
 Ho.children[0].addEventListener('click',()=>
-  {Sr.style.display='flex'; Mn.innerHTML=''; Cn.style.display='';});
+  {Sr.style.display='flex'; Mn.innerHTML=''; Ct.style.display='';});
 Ho.children[4].addEventListener('click',()=>
-  {Cn.style.display='flex'; Sr.style.display=''; Mn.innerHTML='';});
+  {Ct.style.display='flex'; Mn.innerHTML=''; Sr.style.display='';});
 
 // function
 Ho.children[1].addEventListener('click',()=>
-  {Dt('categories.php',1); Sr.style.display=''; Cn.style.display='';});
+  {Dt('categories.php',1); Sr.style.display=''; Ct.style.display='';});
 Ho.children[2].addEventListener('click',()=>
-  {Dt('list.php?a=list',2); Sr.style.display=''; Cn.style.display='';});
+  {Dt('list.php?a=list',2); Sr.style.display=''; Ct.style.display='';});
 Ho.children[3].addEventListener('click',()=>
-  {Dt('list.php?i=list',3); Sr.style.display=''; Cn.style.display='';});
+  {Dt('list.php?i=list',3); Sr.style.display=''; Ct.style.display='';});
 
 Sr.children[0].addEventListener('input',()=>Dt('search.php?s='+Sr.children[0].value));
 Sr.children[1].addEventListener('input',()=>Dt('search.php?f='+Sr.children[1].value));
 
-const d=document.querySelector('dialog');
-let v=['^[a-zA-Z ]+$', '^(([^<>()[\\]\\\.,;:\\s@"]+(\\.[^<>()[\\]\\\.,;:\\s@"]+)*)|.(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$', '^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$', '^(0?[1-9]|[1-9][0-9]|[1][1-9][1-9]|200)$', '^(?=.*\\d)(?=.*[a-z])[0-9a-zA-Z]{8,}$'];
-for (let i = 0; i < 6; i++) {
-  Cn.children[i].addEventListener('blur', () => {
-    if (!RegExp(v[i] || Cn.children[4].value).test(Cn.children[i].value)) {
-      d.textContent = 'Invalid ' + Cn.children[i].getAttribute('placeholder');
-      d.show(); setTimeout(() => d.close(), 3000);
-      Cn.lastElementChild.setAttribute('disabled', 'true');
-    }
-    else {
-      let V = 1; for (let i = 0; i < 6; i++) { if (!RegExp(v[i] || Cn.children[4].value).test(Cn.children[i].value)) { V = 0; break; } }
-      if (V) Cn.lastElementChild.removeAttribute('disabled');
-    }
-  }
-  );
-}
+const v=['^[a-zA-Z ]+$', '^(([^<>()[\\]\\\.,;:\\s@"]+(\\.[^<>()[\\]\\\.,;:\\s@"]+)*)|.(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$', '^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$', '^(0?[1-9]|[1-9][0-9]|[1][1-9][1-9]|200)$', '^(?=.*\\d)(?=.*[a-z])[0-9a-zA-Z]{8,}$']; //
+for(let i=0;i<6;i++){Ct.children[i].addEventListener('blur',()=>
+  {if(!RegExp(v[i]||'^'+Ct.children[4].value+'$').test(Ct.children[i].value))
+    {Ct.lastElementChild.setAttribute('disabled',''); Ct.children[6].textContent=
+    'Invalid '+Ct.children[i].getAttribute('placeholder'); Ct.children[6].show();
+    setTimeout(()=>Ct.children[6].close(),3000);}
+  else{for(let i=0;i<6;i++)
+    {if(RegExp(v[i]||'^'+Ct.children[4].value+'$').test(Ct.children[i].value))
+    {if(i==5) Ct.lastElementChild.removeAttribute('disabled');} else break;}}});}

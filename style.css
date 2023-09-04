@@ -17,8 +17,8 @@ header {background: #0d0d0d; color: #f9f6f6;
   position: fixed; inset: 0 auto 0 0; z-index: 1; display: flex; flex-flow: column;
   justify-content: space-between; transition: .4s ease-in-out;}
 .hd {translate: -100%;}
-header>div {background: #fff; color: #000; box-sizing: border-box; height: 100%;
-  padding: 24px 8px; position: absolute; top: 0; left: 100%; display: flex;
+header>div {background: #fff; color: #000; padding: 24px 8px;
+  position: absolute; inset: 0 auto 0 100%; display: flex;
   flex-flow: column;  justify-content: space-between; align-items: center;}
 h1>img {vertical-align: middle; width: 50px;}
 h1+button {background: 0; font-size: 2em; padding: 10px; border: 0;
@@ -78,6 +78,10 @@ a:has(+[href*='youtube']):hover {background: #157347;}
 [href*='youtube']:hover {background: #bb2d3b;}
 
 main+form {width: 90%; margin: auto;}
+main+form>dialog {box-shadow: 0 .5em 1em #00000026; padding: 12px 8px;
+  border: solid 1px #ced4da; border-radius: 5px;}
+main+form>dialog::before {content: '\21'; background: orange; color: #fff;
+  font-weight: 700; padding: 2px 10px; border-radius: 3px; margin-right: 8px;}
 main+form>button {color: #dc3545; border: solid 1px #dc3545;}
 main+form>button:disabled {opacity: .65;}
 main+form>button:enabled:hover {background: #dc3545; color: #fff; cursor: pointer;}
